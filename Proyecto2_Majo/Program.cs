@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,11 +11,11 @@ namespace Proyecto2_Majo
     {
         static void Main(string[] args)
         {
-            int opcionMenu, solicitudesPendientes = 0, opcionAuxiliar;
-            string nombre, codigo;
+            int opcionMenu, solicitudesPendientes = 0, opcionAuxiliar, tipo;
+            string nombre, codigo, telefono, correo, tipoClienteAuxiliar;
             Queue<Solicitud> Urgentes = new Queue<Solicitud>();
             Queue<Solicitud> Normales = new Queue<Solicitud>();
-
+            List<Cliente> Clientes = new List<Cliente>();
             int ValidarEntero()
             {
                 int dato;
@@ -40,6 +41,92 @@ namespace Proyecto2_Majo
                 } while (true);
                 return dato;
             }
+            string ValidarTelefono()
+            {
+                string value = Console.ReadLine();
+                do
+                {
+                    if (value != "")
+                    {
+                        value = value.Trim();
+                        if (value.Length == 8 && value.All(char.IsDigit))
+                        {
+                            break;
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error: el número de teléfono solo debe contener números");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: debe ingresar un número de telérfono");
+                    }
+                } while (true);
+                return value;
+            }
+            string ValidarCorreo()
+            {
+                string value = Console.ReadLine();
+                do
+                {
+                    if (value != "")
+                    {
+                        value = value.Trim();
+                        if(value!="" && value.Contains("@")&& value.Contains(".com"))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error: el correo no es válido");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: debe ingresar un correo");
+                    }
+                } while (true);
+                return value;
+            }
+            string ValidarString()
+            {
+                string value = Console.ReadLine();
+                do
+                {
+                    if (value.Trim() != "")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: debe ingresar un dato");
+                    }
+                } while (true);
+                return value;
+            }
+            string AsignarTipoCliente(int opcion)
+            {
+                string value;
+            if (opcion == 1)
+            {
+                value = "Normal";
+            }
+            else if (opcion == 2)
+            {
+                value = "Estudiante";
+            }
+            else if (opcion == 3)
+            {
+                value = "Empresa";
+            }
+            else
+            {
+                    value = "Otro";
+            }
+                return value;
+        }
             do
             {
                 Console.WriteLine("================ XELATECH SOPORTE ================");
@@ -58,7 +145,15 @@ namespace Proyecto2_Majo
                             switch (opcionAuxiliar)
                             {
                                 case 1:
-
+                                    Console.Write("\nIngrese el nombre del cliente: ");
+                                    nombre = Console.ReadLine();
+                                    Console.Write("\nIngrese el número de teléfono: ");
+                                    telefono = ValidarTelefono();
+                                    Console.Write("\nIngrese el correo electrónico: ");
+                                    correo= ValidarCorreo();
+                                    Console.Write("\nIngrese el tipo de cliente: \n1. Normal\n2. Estudiante\n3. Empresa\nIngrese una opción: ");
+                                    tipo = ValidarEntero();
+                                    tipoClienteAuxiliar=AsignarTipoCliente(tipo);
                                     break;
                             }
                         } while (opcionAuxiliar != 4);

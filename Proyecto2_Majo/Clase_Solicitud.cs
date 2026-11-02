@@ -198,5 +198,16 @@ namespace Proyecto2_Majo
                 Estado = "Cancelada";
             }
         }
+        public void AplicarDescuento()
+        {
+            if(Cliente.TipoCliente=="Estudiante")
+            {
+                CostoTotal -= 10;
+            }
+            else if(Cliente.TipoCliente=="Empresa")
+            {
+                CostoTotal -= 5;
+            }
+        }
     }
 }

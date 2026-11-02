@@ -51,10 +51,12 @@ namespace Proyecto2_Majo
         }
         public void ActualizarSolicitudes(int nuevasSolicitudes)
         {
-            if(nuevasSolicitudes>CantidadSolicitudes)
+            if (nuevasSolicitudes > CantidadSolicitudes)
             {
-            CantidadSolicitudes=nuevasSolicitudes;
+                CantidadSolicitudes = nuevasSolicitudes;
             }
         }
-    }   
+
+        
+    }
 }
