@@ -11,7 +11,7 @@ namespace Proyecto2_Majo
     {
         static void Main(string[] args)
         {
-            int opcionMenu, solicitudesPendientes = 0, opcionAuxiliar, tipo;
+            int opcionMenu, solicitudesPendientes = 0, opcionAuxiliar, tipo, codigoClientes = 0, codigoRepuestos = 0;
             string nombre, codigo, telefono, correo, tipoClienteAuxiliar;
             Queue<Solicitud> Urgentes = new Queue<Solicitud>();
             Queue<Solicitud> Normales = new Queue<Solicitud>();
@@ -43,9 +43,10 @@ namespace Proyecto2_Majo
             }
             string ValidarTelefono()
             {
-                string value = Console.ReadLine();
+                string value;
                 do
                 {
+                    value = Console.ReadLine();
                     if (value != "")
                     {
                         value = value.Trim();
@@ -56,25 +57,26 @@ namespace Proyecto2_Majo
                         }
                         else
                         {
-                            Console.WriteLine("Error: el número de teléfono solo debe contener números");
+                            Console.WriteLine("Error: el número de teléfono solo debe contener números\nIngrese el número nuevamente: ");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Error: debe ingresar un número de telérfono");
+                        Console.WriteLine("Error: debe ingresar un número de telérfono\n Ingrese el número nuevamente: ");
                     }
                 } while (true);
                 return value;
             }
             string ValidarCorreo()
             {
-                string value = Console.ReadLine();
+                string value;
                 do
                 {
+                    value = Console.ReadLine();
                     if (value != "")
                     {
                         value = value.Trim();
-                        if(value!="" && value.Contains("@")&& value.Contains(".com"))
+                        if (value != "" && value.Contains("@") && value.Contains(".com"))
                         {
                             break;
                         }
@@ -92,9 +94,10 @@ namespace Proyecto2_Majo
             }
             string ValidarString()
             {
-                string value = Console.ReadLine();
+                string value;
                 do
                 {
+                    value = Console.ReadLine();
                     if (value.Trim() != "")
                     {
                         break;
@@ -109,24 +112,24 @@ namespace Proyecto2_Majo
             string AsignarTipoCliente(int opcion)
             {
                 string value;
-            if (opcion == 1)
-            {
-                value = "Normal";
-            }
-            else if (opcion == 2)
-            {
-                value = "Estudiante";
-            }
-            else if (opcion == 3)
-            {
-                value = "Empresa";
-            }
-            else
-            {
+                if (opcion == 1)
+                {
+                    value = "Normal";
+                }
+                else if (opcion == 2)
+                {
+                    value = "Estudiante";
+                }
+                else if (opcion == 3)
+                {
+                    value = "Empresa";
+                }
+                else
+                {
                     value = "Otro";
-            }
+                }
                 return value;
-        }
+            }
             do
             {
                 Console.WriteLine("================ XELATECH SOPORTE ================");
@@ -150,10 +153,102 @@ namespace Proyecto2_Majo
                                     Console.Write("\nIngrese el número de teléfono: ");
                                     telefono = ValidarTelefono();
                                     Console.Write("\nIngrese el correo electrónico: ");
-                                    correo= ValidarCorreo();
+                                    correo = ValidarCorreo();
                                     Console.Write("\nIngrese el tipo de cliente: \n1. Normal\n2. Estudiante\n3. Empresa\nIngrese una opción: ");
                                     tipo = ValidarEntero();
-                                    tipoClienteAuxiliar=AsignarTipoCliente(tipo);
+                                    tipoClienteAuxiliar = AsignarTipoCliente(tipo);
+                                    codigoClientes++;
+                                    codigo = "CLIEN-" + codigoClientes.ToString();
+                                    Clientes.Add(new Cliente(nombre, codigo, telefono, correo, tipoClienteAuxiliar, 0));
+                                    Console.WriteLine("Cliente registrado exitosamente");
+                                    break;
+                                case 2:
+                                    string codigoBusqueda;
+                                    bool encontrado = false;
+                                    if (Clientes.Count == 0)
+                                    {
+                                        Console.WriteLine("No hay clientes registrados");
+                                    }
+                                    else
+                                    {
+                                        Console.Write("Ingrese el código del cliente: ");
+                                        codigoBusqueda = ValidarString();
+                                        foreach (Cliente c in Clientes)
+                                        {
+                                            if (c.Codigo == codigoBusqueda)
+                                            {
+                                                encontrado = true;
+                                                Console.WriteLine("--- INFORMACIÓN DEL CLIENTE ---");
+                                                c.MostrarInformacion();
+                                                break;
+                                            }
+                                        }
+                                        if (!encontrado)
+                                        {
+                                            Console.WriteLine($"El código {codigoBusqueda} no existe");
+                                        }
+                                    }
+                                    break;
+                                case 3:
+                                    int opcionActualizar;
+                                    encontrado = false;
+                                    if (Clientes.Count == 0)
+                                    {
+                                        Console.WriteLine("No hay clientes registrados");
+                                    }
+                                    else
+                                    {
+                                        Console.Write("Ingrese el código del cliente: ");
+                                        codigoBusqueda = ValidarString();
+                                        foreach (Cliente c in Clientes)
+                                        {
+                                            if (c.Codigo == codigoBusqueda)
+                                            {
+                                                encontrado = true;
+                                                Console.WriteLine("--- INFORMACIÓN DEL CLIENTE ---");
+                                                c.MostrarInformacion();
+                                                Console.WriteLine("¿Qué información desea actualizar?\n1. Nombre\n2. Número de teléfono\n3. Correo el ectrónico\n4. Tipo de cliente");
+                                                Console.Write("Ingrese una opción: ");
+                                                opcionActualizar = ValidarEntero();
+                                                switch(opcionActualizar)
+                                                {
+                                                    case 1:
+                                                        Console.Write("Ingrese el nuevo nombre: ");
+                                                        nombre = ValidarString();
+                                                        c.NombreCompleto = nombre;
+                                                        break;
+                                                    case 2:
+                                                        Console.Write("Ingrese el nuevo número: ");
+                                                        telefono = ValidarTelefono();
+                                                        c.NumeroTelefono = telefono;
+                                                        break;
+                                                    case 3:
+                                                        Console.Write("Ingrese el nuevo correo: ");
+                                                        correo= ValidarCorreo();
+                                                        c.Correo= correo;
+                                                        break;
+                                                    case 4:
+                                                        Console.Write("\nIngrese el tipo de cliente: \n1. Normal\n2. Estudiante\n3. Empresa\nIngrese una opción: ");
+                                                        tipo = ValidarEntero();
+                                                        tipoClienteAuxiliar = AsignarTipoCliente(tipo);
+                                                        c.TipoCliente= tipoClienteAuxiliar;
+                                                        break;
+                                                }
+                                                Console.WriteLine("Información actualizada exitosamente");
+                                                break;
+                                            }
+                                        }
+                                        if (!encontrado)
+                                        {
+                                            Console.WriteLine($"El código {codigoBusqueda} no existe");
+                                        }
+                                    }
+                                    break;
+                                case 4:
+                                    Console.WriteLine("Regresando al menú");
+                                    break;
+                                default:
+                                    Console.WriteLine("Opción no válida... intente nuevamente");
                                     break;
                             }
                         } while (opcionAuxiliar != 4);

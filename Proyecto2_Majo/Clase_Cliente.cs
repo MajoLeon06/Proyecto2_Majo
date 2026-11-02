@@ -29,7 +29,7 @@ namespace Proyecto2_Majo
             get { return cantidadSolicitudes; }
             set
             {
-                if (value > 0)
+                if (value >= 0)
                 {
                     cantidadSolicitudes = value;
                 }
