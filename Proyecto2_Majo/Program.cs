@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Proyecto2_Majo
@@ -130,6 +131,52 @@ namespace Proyecto2_Majo
                 }
                 return value;
             }
+            void MostrarErrorAnimado(string textoError)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(textoError);
+                Thread.Sleep(1400);
+                Console.Write("\r" + new string(' ', textoError.Length) + "\r");
+                Console.ResetColor();
+            }
+            void MostrarExitoAnimado(string mensajeExito)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+
+
+
+                Console.Write($" {mensajeExito}");
+
+                Thread.Sleep(2000);
+
+                Console.Write("\r" + new string(' ', mensajeExito.Length + 5) + "\r");
+
+                Console.ResetColor();
+            }
+            void MostrarAnimacionPuntos()
+            {
+                Console.Write("Procesando y guardando datos");
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.Write(".");
+                    Thread.Sleep(400);
+                }
+                Console.Clear();
+                MostrarExitoAnimado("Registro completado con éxito!");
+            }
+
+            void AnimacionContinuar()
+            {
+                Console.Write("\nRegresando al menú anterior");
+                for (int i = 0; i < 5; i++)
+                {
+                    Console.Write(".");
+                    Thread.Sleep(400);
+                }
+                Console.Clear();
+            }
+
             do
             {
                 Console.WriteLine("================ XELATECH SOPORTE ================");
@@ -141,6 +188,7 @@ namespace Proyecto2_Majo
                     case 1:
                         do
                         {
+                            Console.Clear();
                             Console.WriteLine("---------- GESTIÓN DE CLIENTES ----------");
                             Console.WriteLine("1. Registrar nuevo cliente\n2. Consultar cliente por código\n3. Actualizar información\n4. Volver al menú principal");
                             Console.Write("Ingrese una opción: ");
@@ -148,6 +196,7 @@ namespace Proyecto2_Majo
                             switch (opcionAuxiliar)
                             {
                                 case 1:
+                                    Console.Clear();
                                     Console.Write("\nIngrese el nombre del cliente: ");
                                     nombre = Console.ReadLine();
                                     Console.Write("\nIngrese el número de teléfono: ");
@@ -160,9 +209,11 @@ namespace Proyecto2_Majo
                                     codigoClientes++;
                                     codigo = "CLIEN-" + codigoClientes.ToString();
                                     Clientes.Add(new Cliente(nombre, codigo, telefono, correo, tipoClienteAuxiliar, 0));
-                                    Console.WriteLine("Cliente registrado exitosamente");
+                                    MostrarExitoAnimado("Cliente registrado exitosamente");
+                                    Thread.Sleep(1000);
                                     break;
                                 case 2:
+                                    Console.Clear();
                                     string codigoBusqueda;
                                     bool encontrado = false;
                                     if (Clientes.Count == 0)
@@ -188,8 +239,11 @@ namespace Proyecto2_Majo
                                             Console.WriteLine($"El código {codigoBusqueda} no existe");
                                         }
                                     }
+                                    Thread.Sleep(6000);
+                                    AnimacionContinuar();
                                     break;
                                 case 3:
+                                    Console.Clear();
                                     int opcionActualizar;
                                     encontrado = false;
                                     if (Clientes.Count == 0)
@@ -210,7 +264,7 @@ namespace Proyecto2_Majo
                                                 Console.WriteLine("¿Qué información desea actualizar?\n1. Nombre\n2. Número de teléfono\n3. Correo el ectrónico\n4. Tipo de cliente");
                                                 Console.Write("Ingrese una opción: ");
                                                 opcionActualizar = ValidarEntero();
-                                                switch(opcionActualizar)
+                                                switch (opcionActualizar)
                                                 {
                                                     case 1:
                                                         Console.Write("Ingrese el nuevo nombre: ");
@@ -224,17 +278,20 @@ namespace Proyecto2_Majo
                                                         break;
                                                     case 3:
                                                         Console.Write("Ingrese el nuevo correo: ");
-                                                        correo= ValidarCorreo();
-                                                        c.Correo= correo;
+                                                        correo = ValidarCorreo();
+                                                        c.Correo = correo;
                                                         break;
                                                     case 4:
                                                         Console.Write("\nIngrese el tipo de cliente: \n1. Normal\n2. Estudiante\n3. Empresa\nIngrese una opción: ");
                                                         tipo = ValidarEntero();
                                                         tipoClienteAuxiliar = AsignarTipoCliente(tipo);
-                                                        c.TipoCliente= tipoClienteAuxiliar;
+                                                        c.TipoCliente = tipoClienteAuxiliar;
+                                                        break;
+                                                    default:
+                                                        Console.WriteLine("Opción no válida... intente nuevamente\n");
                                                         break;
                                                 }
-                                                Console.WriteLine("Información actualizada exitosamente");
+                                                MostrarExitoAnimado("Información actualizada exitosamente");
                                                 break;
                                             }
                                         }
@@ -243,15 +300,19 @@ namespace Proyecto2_Majo
                                             Console.WriteLine($"El código {codigoBusqueda} no existe");
                                         }
                                     }
+                                    AnimacionContinuar();
                                     break;
                                 case 4:
-                                    Console.WriteLine("Regresando al menú");
+                                    Console.Clear();
+                                    AnimacionContinuar();
                                     break;
                                 default:
                                     Console.WriteLine("Opción no válida... intente nuevamente");
+                                    AnimacionContinuar();
                                     break;
                             }
                         } while (opcionAuxiliar != 4);
+                        AnimacionContinuar();
                         break;
                     case 2:
                         //Tecnicos
