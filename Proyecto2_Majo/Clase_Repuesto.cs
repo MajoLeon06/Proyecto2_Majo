@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto2_Majo
 {
-    internal class Repuesto
+    public class Repuesto
     {
         private string codigo;
 

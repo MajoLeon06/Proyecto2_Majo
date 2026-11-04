@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto2_Majo
 {
-    internal class Solicitud
+    public class Solicitud
     {
         private string codigo;
 
@@ -36,9 +36,9 @@ namespace Proyecto2_Majo
             get { return equipo; }
             set { equipo = value; }
         }
-        private Tecnicos tecnico;
+        private Tecnico tecnico;
 
-        public Tecnicos Tecnico
+        public Tecnico Tecnico
         {
             get { return tecnico; }
             set { tecnico = value; }

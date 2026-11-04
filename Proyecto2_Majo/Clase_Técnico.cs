@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace Proyecto2_Majo
 {
-    public class Tecnicos : Persona
+    public class Tecnico : Persona
     {
         private string especialidad;
 
@@ -84,6 +85,12 @@ namespace Proyecto2_Majo
                 }
             }
         }
+        private List<Solicitud> detallesTrabajosTerminados;
+        public List<Solicitud> DetallesTrabajosTerminados
+        {
+            get { return detallesTrabajosTerminados; }
+            set { detallesTrabajosTerminados = value;}
+        }
         private double calificacionPromedio;
 
         public double CalificacionPromedio
@@ -99,20 +106,27 @@ namespace Proyecto2_Majo
         }
         private double[] calificaciones;
 
-        public double[]Calificaciones
+        public double[] Calificaciones
         {
             get { return calificaciones; }
             set { calificaciones = value; }
         }
 
-        public Tecnicos(string nombre, string codigo, string correo, string telefono, string disponibilidad, string especialidad, int limite, int activos, int terminados, double calificacion, double[]calificaciones) : base(nombre, telefono, correo, codigo)
+        public Tecnico(string nombre, string codigo, string correo, string telefono, string especialidad, int limite) : base(nombre, telefono, correo, codigo)
         {
             Especialidad = especialidad;
             LimiteTrabajos = limite;
-            TrabajosActivos = activos;
-            TrabajosTerminados = terminados;
-            CalificacionPromedio = calificacion;
-            Calificaciones = calificaciones;
+            TrabajosActivos = 0;
+            TrabajosTerminados = 0;
+            Disponibilidad = "Disponible";
+            DetallesTrabajosActivos = new Solicitud[limite];
+
+        }
+        private Solicitud[] detallesTrabajosActivos;
+        public Solicitud[] DetallesTrabajosActivos
+        {
+            get { return detallesTrabajosActivos; }
+            set { detallesTrabajosActivos = value; }
         }
         public override void MostrarInformacion()
         {

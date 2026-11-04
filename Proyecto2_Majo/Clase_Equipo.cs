@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto2_Majo
 {
-    internal class Equipo
+    public class Equipo
     {
         private string codigo;
 
